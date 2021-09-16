@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\GameController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,12 +27,17 @@ Route::group([
     'prefix' => 'auth'
 
 ], function () {
-    Route::post('logout', 'AuthController@logout');
+    Route::post('logout', [AuthController::class, 'logout']);
 
-    Route::post('login', 'AuthController@login');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
-    Route::post('register', 'AuthController@register');
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('me', [AuthController::class, 'me']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::post('register',[AuthController::class, 'register']);
 
 
 });
+
+Route::apiResource('/game',GameController::class);
+Route::apiResource('/userdata', \App\Http\Controllers\UserController::class);
+Route::apiResource('/tournament',\App\Http\Controllers\Api\TournamentsController::class);
+Route::apiResource('/members', \App\Http\Controllers\Api\Members_tournamentsController::class);
